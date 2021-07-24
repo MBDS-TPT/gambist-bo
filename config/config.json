@@ -1,0 +1,46 @@
+{
+    "BASE_URL": "http://localhost:8080/",
+    "Team": {
+        "FindById": "team/by-id",
+        "FindAll": "team/all",
+        "Add": "team/add",
+        "Edit": "team/edit",
+        "Delete": "team/delete"
+    },
+    "Category": {
+        "FindById": "category/by-id",
+        "FindAll": "category/all",
+        "Add": "category/add",
+        "Edit": "category/edit",
+        "Delete": "category/delete"
+    },
+    "Match": {
+        "FindById": "match/by-id",
+        "FindAll": "match/all",
+        "Add": "match/add",
+        "Edit": "match/edit",
+        "Delete": "match/delete",
+        "UpdateScore": "match/updateScore"
+    },
+    "BetType": {
+        "FindById": "betType/by-id",
+        "FindAll": "betType/all",
+        "Add": "betType/add",
+        "Edit": "betType/edit",
+        "Delete": "betType/delete"
+    },
+    "Bet": {
+        "FindById": "bet/by-id",
+        "FindAll": "bet/all",
+        "Add": "bet/add",
+        "Edit": "bet/edit",
+        "Delete": "bet/delete"
+    },
+    "User": {
+        "FindById": "user/by-id",
+        "FindAll": "user/all",
+        "Add": "user/add",
+        "Edit": "user/edit",
+        "Delete": "user/delete"
+    }
+}
