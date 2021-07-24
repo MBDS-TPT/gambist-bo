@@ -13,9 +13,9 @@ export const GetTableData = <Type>(modelName: string, data: Type[]) => {
     let objects: any[] = []
     switch(modelName) {
         case ModelName.CATEGORY:
-            for(const obj of data) {
-                objects.push([obj?.id, obj?.label, {"state": obj?.state}]);
-            }
+            // for(const obj of data) {
+            //     objects.push([obj?.id, obj?.label, {"state": obj?.state}]);
+            // }
             return objects;
         case ModelName.TEAM:
             return ["ID", "Team Name", "Category", "State"]

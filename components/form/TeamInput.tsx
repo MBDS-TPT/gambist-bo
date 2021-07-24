@@ -31,6 +31,7 @@ const TeamInput: React.FC<TeamInputProps> = ({
 
     const onSubmit = () => {
         const team: Team = {
+            logo: "",
             name: teamName,
             categoryId: category.id
         };

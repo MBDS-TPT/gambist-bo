@@ -34,6 +34,7 @@ const MatchSearchForm: React.FC<MatchSearchFormProps> = ({
     useEffect(()=> {
         if(teams[0].id !== '-1') {
             teams.unshift({
+                logo: "",
                 id: "-1",
                 name: '--- None ---'
             });

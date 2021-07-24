@@ -46,6 +46,7 @@ const EndMatchForm: React.FC<EndMatchFormProps> = ({
 
     useEffect(() => {
         const date = new Date(match.matchDate);
+        
         setEditBtnEnabled(date.getTime() > new Date().getTime());
     }, []);
 
@@ -78,7 +79,7 @@ const EndMatchForm: React.FC<EndMatchFormProps> = ({
                     onClick={onSubmit} 
                     color="primary" 
                     className="submit-btn" 
-                    disabled={editBtnEnabled}
+                    disabled={Boolean(editBtnEnabled)}
                     startIcon={showLoader && <Loader width={35} color='var(--white)' bgColor={'transparent'}/>}>
                         Edit Score
                 </Button>

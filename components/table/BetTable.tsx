@@ -88,15 +88,15 @@ const BetTable: React.FC<BetTableProps> = ({
                         <TableBody>
                             {bets && bets.map((bet: Bet, index) => {
                                 return (
-                                    <TableRow hover key={bet.id}>
-                                        <TableCell>{ bet.id }</TableCell>
-                                        <TableCell>{ `${bet.user.firstname} ${bet.user.lastname }` }</TableCell>
-                                        <TableCell>{ bet.betValue }</TableCell>
-                                        <TableCell>{ bet.winningRate }%</TableCell>
-                                        <TableCell>{ `${bet.match.teamA?.name} - ${bet.match.teamB?.name}` }</TableCell>
-                                        <TableCell>{ DateUtil.parseDate(bet.betDate) }</TableCell>
+                                    <TableRow hover key={bet?.id}>
+                                        <TableCell>{ bet?.id }</TableCell>
+                                        <TableCell>{ `${bet?.user?.firstname} ${bet?.user?.lastname }` }</TableCell>
+                                        <TableCell>{ bet?.betValue }</TableCell>
+                                        <TableCell>{ bet?.winningRate }%</TableCell>
+                                        <TableCell>{ `${bet?.match?.teamA?.name} - ${bet?.match?.teamB?.name}` }</TableCell>
+                                        <TableCell>{ DateUtil.parseDate(bet?.betDate) }</TableCell>
                                         <TableCell>
-                                            <StateText state={bet.state || 0} />    
+                                            <StateText state={bet?.state || 0} />    
                                         </TableCell>
                                         <TableCell className="table-actions">
                                             <IconButton onClick={() => { openEditModal(bet) }} aria-label="edit">

@@ -1,6 +1,6 @@
 export interface Team {
     id?: string;
-    logo: string;
+    logo?: string;
     name: string;
     categoryId?: string;
     category?: Category;

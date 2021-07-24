@@ -42,6 +42,7 @@ const TeamForm: React.FC<TeamFormProps> = ({
     const onSubmit = async () => {
         const team_: Team = {
             id: team ? team.id : '0',
+            logo: "",
             name: teamName,
             categoryId: category.id
         };
