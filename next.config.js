@@ -9,11 +9,11 @@ module.exports = {
             source: '/',
             destination: '/matches',
             permanent: true,
-            env: {
-              API_URL: process.env.API_URL,
-            }
           },
         ]
       },
+    env: {
+      API_URL: process.env.API_URL,
+    }
 }
 
