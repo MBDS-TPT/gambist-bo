@@ -1,6 +1,6 @@
 import Config from '../config/config.json';
 
-export const getBaseUrl = () => process.env.BASE_URL || Config.BASE_URL;
+export const getBaseUrl = () => process.env.API_URL || process.env.BASE_URL || Config.BASE_URL;
 
 export default abstract class BasicService {
 
