@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Page from '../../components/page-wrapper/Page';
 import UserTable from '../../components/table/UserTable';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps, GetStaticProps } from 'next';
 import UserForm from '../../components/form/UserForm';
 import TitleBorder from '../../components/border/TitleBorder';
 import { useState } from 'react';
@@ -75,7 +75,7 @@ const PageWrapper = styled.div`
 
 `;
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const userService = new UserService();
     const teamService = new TeamService();
     const categoryService = new CategoryService();

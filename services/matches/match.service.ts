@@ -16,6 +16,10 @@ export default class MatchService extends BasicService{
         return await BasicService.fetchData(Config.Match.FindAll, params);
     }
 
+    static async EndMatch(matchId: number) {
+        return BasicService.postData(Config.Match.EndMatch, {matchId: matchId});
+    }
+
     static async PostMatch(match: any) {
         return BasicService.postData(Config.Match.Add, match);
     }

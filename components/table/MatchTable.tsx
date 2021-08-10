@@ -31,6 +31,7 @@ export interface MatchTableProps {
     onLoad?: Boolean;
     showEditScoreLoader?: Boolean;
     onEditScore?: Function;
+    onEndMatch?: Function;
     changePage?: any;
 }
 
@@ -40,6 +41,7 @@ const MatchTable: React.FC<MatchTableProps> = ({
     onDelete,
     onEdit,
     onEditScore,
+    onEndMatch,
     categories=[],
     teams=[],
     onLoad=false,
@@ -95,6 +97,11 @@ const MatchTable: React.FC<MatchTableProps> = ({
             setEndMatchModalVisible(false);
         });
     }
+    const _onEndMatch = (match: any) => {
+        if(onEndMatch) onEndMatch(match, () => {
+            setEndMatchModalVisible(false);
+        });
+    }
 
     const formatDate = (match: Match) => {
         const date = match.matchDate
@@ -120,7 +127,7 @@ const MatchTable: React.FC<MatchTableProps> = ({
             </Modal>
             
             <Modal title="End match" onClose={onCloseEndMatchModal} show={endMatchModalVisible}>
-                <EndMatchForm showLoader={showEditScoreLoader} onEditScore={_onEditScore} match={selectedMatch} />
+                <EndMatchForm onEndMatch={_onEndMatch} showLoader={showEditScoreLoader} onEditScore={_onEditScore} match={selectedMatch} />
             </Modal>
             <Paper>
                 <TableContainer className="table-container">  
@@ -147,15 +154,18 @@ const MatchTable: React.FC<MatchTableProps> = ({
                                             <StateText state={match.state || 0} />    
                                         </TableCell>
                                         <TableCell className="table-actions">
-                                            <IconButton onClick={() => { openEditModal(match) }} aria-label="edit">
+                                            <IconButton onClick={() => { openEndMatchModal(matches[index]) }} aria-label="edit">
                                                 <EditIcon/>
                                             </IconButton>
                                             <IconButton onClick={() => { openDeleteModal(match) }} aria-label="delete">
                                                 <DeleteIcon color="error" />
                                             </IconButton>
-                                            <Button className="end-match-btn" onClick={() => { openEndMatchModal(matches[index]) }} aria-label="end">
-                                                END
-                                            </Button>
+                                            {/* <Button className="end-match-btn" onClick={() => { openEndMatchModal(matches[index]) }} aria-label="end">
+                                                EDIT SCORE
+                                            </Button> */}
+                                            {/* <IconButton onClick={() => { openEditModal(match) }} aria-label="edit">
+                                                <EditIcon/> Score
+                                            </IconButton> */}
                                         </TableCell>
                                     </TableRow>
                                 )
