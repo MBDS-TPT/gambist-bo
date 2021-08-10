@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import styled from 'styled-components';
 import Page from '../../components/page-wrapper/Page';
 import TeamsTable from '../../components/table/TeamsTable';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps, GetStaticProps } from 'next';
 import TeamService from '../../services/teams/team.service';
 import TeamInput from '../../components/form/TeamInput';
 import TitleBorder from '../../components/border/TitleBorder';
@@ -136,7 +136,7 @@ const PageWrapper = styled.div`
     }
 `;
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const teamService = new TeamService();
     const categoryService = new CategoryService();
     const teams = await teamService.getAllTeam();

@@ -11,6 +11,7 @@ export interface EndMatchFormProps {
     className?: string;
     match: Match;
     onEditScore: any;
+    onEndMatch: any;
     showLoader?: Boolean;
 }
 
@@ -18,6 +19,7 @@ const EndMatchForm: React.FC<EndMatchFormProps> = ({
     className='',
     match,
     onEditScore,
+    onEndMatch,
     showLoader=false
 }) => {
     
@@ -42,6 +44,10 @@ const EndMatchForm: React.FC<EndMatchFormProps> = ({
             scoreB: teamBScore
         }
         if(onEditScore) onEditScore(params);
+    }
+
+    const _onEndMatch = (event: any) => {
+        if(onEndMatch) onEndMatch(match);
     }
 
     useEffect(() => {
@@ -82,6 +88,15 @@ const EndMatchForm: React.FC<EndMatchFormProps> = ({
                     disabled={Boolean(editBtnEnabled)}
                     startIcon={showLoader && <Loader width={35} color='var(--white)' bgColor={'transparent'}/>}>
                         Edit Score
+                </Button>
+                <Button 
+                    variant="contained" 
+                    onClick={_onEndMatch} 
+                    color="primary" 
+                    className="submit-btn" 
+                    disabled={Boolean(editBtnEnabled)}
+                    startIcon={showLoader && <Loader width={35} color='var(--white)' bgColor={'transparent'}/>}>
+                        End Match
                 </Button>
             </form>
         </Wrapper>

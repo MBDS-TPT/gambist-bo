@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Page from '../../components/page-wrapper/Page';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps, GetStaticProps } from 'next';
 import TitleBorder from '../../components/border/TitleBorder';
 import CategoryService from '../../services/categories/category.service';
 import CategoryTable from '../../components/table/CategoryTable';
@@ -69,7 +69,7 @@ const PageWrapper = styled.div`
 
 `;
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const categoryService = new CategoryService();
     const categories = await categoryService.getAllCategories();
     return {

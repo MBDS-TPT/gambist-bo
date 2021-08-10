@@ -103,6 +103,27 @@ const MatchsPage = (props: PageProps) => {
         });
     }
 
+    const onEndMatch = async (match: any, callback?: Function) => {
+        setEditScoreLoaderVisible(true);
+        await MatchService.EndMatch(match)
+        .then(data => {
+            const matchList_ = matchList.map((match_) => {
+                if(match_.id === match.id)
+                    return (data)
+                return match_
+            })
+            setMatchList([
+                ...matchList_,
+            ])
+            setTimeout(() => {
+                if(callback) callback();
+                setEditScoreLoaderVisible(false);
+            }, 2000);
+        }).catch((err)=>{
+            if(callback) callback();
+        });
+    }
+
     const onSearch = async (searchQuery: any) => {
         setCurrentPage(0);
         const result = await MatchService.getPaginatedMatch(currentPage, rowsPerPage, searchQuery)
@@ -156,6 +177,7 @@ const MatchsPage = (props: PageProps) => {
                     <MatchTable 
                         showEditScoreLoader={editScoreLoaderVisible}
                         onEditScore={onEditScore} 
+                        onEndMatch={onEndMatch}
                         onLoad={dataLoading} 
                         matches={matchList} 
                         teams={teams} 

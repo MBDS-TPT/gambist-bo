@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Page from '../../components/page-wrapper/Page';
 import BetTable from '../../components/table/BetTable';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps, GetStaticProps } from 'next';
 import BetForm from '../../components/form/BetForm';
 import TitleBorder from '../../components/border/TitleBorder';
 import { useState } from 'react';
@@ -73,7 +73,7 @@ const PageWrapper = styled.div`
 
 `;
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const betService = new BetService();
     const teamService = new TeamService();
     const categoryService = new CategoryService();

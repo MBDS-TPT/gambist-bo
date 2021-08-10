@@ -20,7 +20,8 @@
         "Add": "match/add",
         "Edit": "match/edit",
         "Delete": "match/delete",
-        "UpdateScore": "match/updateScore"
+        "UpdateScore": "match/updateScore",
+        "EndMatch": "match/endMatch"
     },
     "BetType": {
         "FindById": "betType/by-id",
