@@ -134,6 +134,12 @@ const PageWrapper = styled.div`
         display: flex;
         justify-content: flex-end;
     }
+    .team-logo {
+        img {
+            width: auto;
+            height: 60px;
+        }
+    }
 `;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {

@@ -127,12 +127,14 @@ const Wrapper = styled.div`
         border-radius: 5px;
     }
     .team-logo {
-        width: 100px;
-        height: 100px;
+        width: auto;
+        height: 60px;
+        display: flex;
     }
     .team-logo img {
         width: auto;
-        height: 100%;
+        height: 60px;
+        margin: auto;
     }
     .table-header {
         font-weight: 700;
@@ -145,6 +147,7 @@ const Wrapper = styled.div`
         display: flex;
         flex-direction: row;
         justify-content: center;
+        height: 95px;
     }
 `;
 
