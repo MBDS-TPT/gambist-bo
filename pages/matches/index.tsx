@@ -6,7 +6,7 @@ import { GetServerSideProps, GetStaticProps } from 'next';
 import MatchForm from '../../components/form/MatchForm';
 import TitleBorder from '../../components/border/TitleBorder';
 import { useState } from 'react';
-import { Category, Match, Team } from '../../model/Model';
+import { Category, Match, State, Team } from '../../model/Model';
 import MatchService from '../../services/matches/match.service';
 import CategoryService from '../../services/categories/category.service';
 import TeamService from '../../services/teams/team.service';
@@ -109,10 +109,10 @@ const MatchsPage = (props: PageProps) => {
     const onEndMatch = async (match: any, callback?: Function) => {
         setEndMatchLoaderVisible(true);
         await MatchService.EndMatch(match.id)
-        .then(data => {
+        .then(res => {
             const matchList_ = matchList.map((match_) => {
                 if(match_.id === match.id)
-                    return (data)
+                    match_.state = State.MATCH_ENDED;
                 return match_
             })
             setMatchList([

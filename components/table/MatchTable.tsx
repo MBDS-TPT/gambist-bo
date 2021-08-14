@@ -219,7 +219,7 @@ const Wrapper = styled.div`
         display: flex;
         flex-direction: row;
         justify-content: center;
-        min-height: 95px;
+        min-height: 112px;
     }
     .table-container {
         position: relative;

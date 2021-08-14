@@ -19,6 +19,8 @@ const StateText: React.FC<StateTextProps> = ({
                 return 'deleted'
             case 1:
                 return 'canceled'
+            case 5:
+                return 'ended'
             default:
                 return 'undefined'
         }

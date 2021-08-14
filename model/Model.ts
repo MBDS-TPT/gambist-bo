@@ -66,3 +66,12 @@ export interface Bet {
     user?: User;
     state?: number;
 }
+
+export class State {
+    static CREATED = 0
+    static DELETED = -1
+    static MATCH_ENDED = 5
+
+    static BET_WON = 6
+    static LOST_BET = 7 
+}
