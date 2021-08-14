@@ -40,6 +40,7 @@ const MatchsPage = (props: PageProps) => {
     const [totalCount, setTotalCount] = useState<number>(matches.totalCount);
     const [modalVisible, setModalVisible] = useState<Boolean>(false);
     const [editScoreLoaderVisible, setEditScoreLoaderVisible] = useState<Boolean>(false);
+    const [_teams, setTeams] = useState(teams);
 
     useEffect(()=>{
         if(matches) {
@@ -153,6 +154,11 @@ const MatchsPage = (props: PageProps) => {
         setRowsPerPage(e.target.value)
     }
 
+    const onChangeCategory = async (id: string) => {
+        const teams = await new TeamService().getTeamByCategory(id);
+        setTeams(teams.data);
+    }
+
     const openAddModal = (e: any) => {
         setModalVisible(true);
     }
@@ -171,7 +177,7 @@ const MatchsPage = (props: PageProps) => {
                     <Button variant="contained" color="primary" onClick={openAddModal} >Add</Button>
                 </div>
                 <TitleBorder title="Search Match">
-                    <MatchSearchForm teams={teams} onSearch={onSearch} categories={categories} />
+                    <MatchSearchForm onChangeCategory={onChangeCategory} teams={_teams} onSearch={onSearch} categories={categories} />
                 </TitleBorder>
                 <TitleBorder title="Match List">
                     <MatchTable 
@@ -212,7 +218,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const categoryService = new CategoryService();
     const matches = await MatchService.getPaginatedMatch(0, 10);
     const categories = await categoryService.getAllCategories();
-    const teams = await teamService.getAllTeam();
+    const teams = await teamService.getTeamByCategory("1");
     return {
         props: {
             matches: matches,

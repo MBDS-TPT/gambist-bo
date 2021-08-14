@@ -10,6 +10,7 @@ export interface MatchSearchFormProps {
     className?: string;
     categories: Category[];
     teams: Team[];
+    onChangeCategory?: any;
     onSearch?: any;
     match?: Match;
 }
@@ -19,7 +20,8 @@ const MatchSearchForm: React.FC<MatchSearchFormProps> = ({
     categories=[],
     onSearch,
     teams,
-    match
+    match,
+    onChangeCategory
 }) => {    
     const matchCategory = categories.filter((category) => category.id === match?.category?.id)[0];
     const [category, setCategory] = useState<Category>(matchCategory ? matchCategory : categories[0]);
@@ -49,8 +51,10 @@ const MatchSearchForm: React.FC<MatchSearchFormProps> = ({
         else setDate2(e.target.value)
     }
 
-    const handleCategoryChange = (e: any) => {
+    const handleCategoryChange = async (e: any) => {
         const id = e.target.value;
+        if(onChangeCategory)
+            onChangeCategory(id);
         setCategory(categories.filter((category) => category.id == id)[0]);
     }
 

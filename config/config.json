@@ -3,6 +3,7 @@
     "Team": {
         "FindById": "team/by-id",
         "FindAll": "team/all",
+        "FindByCategory": "team/all",
         "Add": "team/add",
         "Edit": "team/edit",
         "Delete": "team/delete"
