@@ -40,6 +40,7 @@ const MatchsPage = (props: PageProps) => {
     const [totalCount, setTotalCount] = useState<number>(matches.totalCount);
     const [modalVisible, setModalVisible] = useState<Boolean>(false);
     const [editScoreLoaderVisible, setEditScoreLoaderVisible] = useState<Boolean>(false);
+    const [endMatchLoaderVisible, setEndMatchLoaderVisible] = useState<Boolean>(false);
     const [_teams, setTeams] = useState(teams);
 
     useEffect(()=>{
@@ -100,13 +101,14 @@ const MatchsPage = (props: PageProps) => {
                 setEditScoreLoaderVisible(false);
             }, 2000);
         }).catch((err)=>{
+            setEditScoreLoaderVisible(false);
             if(callback) callback();
         });
     }
 
     const onEndMatch = async (match: any, callback?: Function) => {
-        setEditScoreLoaderVisible(true);
-        await MatchService.EndMatch(match)
+        setEndMatchLoaderVisible(true);
+        await MatchService.EndMatch(match.id)
         .then(data => {
             const matchList_ = matchList.map((match_) => {
                 if(match_.id === match.id)
@@ -121,6 +123,7 @@ const MatchsPage = (props: PageProps) => {
                 setEditScoreLoaderVisible(false);
             }, 2000);
         }).catch((err)=>{
+            setEditScoreLoaderVisible(false);
             if(callback) callback();
         });
     }
@@ -182,6 +185,7 @@ const MatchsPage = (props: PageProps) => {
                 <TitleBorder title="Match List">
                     <MatchTable 
                         showEditScoreLoader={editScoreLoaderVisible}
+                        showEndMatchLoader={endMatchLoaderVisible}
                         onEditScore={onEditScore} 
                         onEndMatch={onEndMatch}
                         onLoad={dataLoading} 
@@ -219,6 +223,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const matches = await MatchService.getPaginatedMatch(0, 10);
     const categories = await categoryService.getAllCategories();
     const teams = await teamService.getTeamByCategory("1");
+    console.log("##", teams.data.length);
     return {
         props: {
             matches: matches,

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
 export interface ModalProps {
@@ -24,6 +25,10 @@ const Modal: React.FC<ModalProps> = ({
         if(onClose) onClose(event);
         // SetVisible(false);
     }
+
+    useEffect(() => {
+        document.body.style.overflow = show ? 'hidden' : 'unset';
+    }, [show]);
 
     const ClickOutside = (event: any) => {
         if(closeOnClickOutside)

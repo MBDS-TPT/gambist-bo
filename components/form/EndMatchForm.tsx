@@ -13,6 +13,7 @@ export interface EndMatchFormProps {
     onEditScore: any;
     onEndMatch: any;
     showLoader?: Boolean;
+    showEndMatchLoader?: Boolean;
 }
 
 const EndMatchForm: React.FC<EndMatchFormProps> = ({
@@ -20,7 +21,8 @@ const EndMatchForm: React.FC<EndMatchFormProps> = ({
     match,
     onEditScore,
     onEndMatch,
-    showLoader=false
+    showLoader=false,
+    showEndMatchLoader=false
 }) => {
     
     const [teamAScore, setTeamAScore] = useState<number>(match.scoreA ? match.scoreA : 0);
@@ -84,7 +86,7 @@ const EndMatchForm: React.FC<EndMatchFormProps> = ({
                     variant="contained" 
                     onClick={onSubmit} 
                     color="primary" 
-                    className="submit-btn" 
+                    className="edit-match-btn" 
                     disabled={Boolean(editBtnEnabled)}
                     startIcon={showLoader && <Loader width={35} color='var(--white)' bgColor={'transparent'}/>}>
                         Edit Score
@@ -93,9 +95,9 @@ const EndMatchForm: React.FC<EndMatchFormProps> = ({
                     variant="contained" 
                     onClick={_onEndMatch} 
                     color="primary" 
-                    className="submit-btn" 
+                    className="end-match-btn" 
                     disabled={Boolean(editBtnEnabled)}
-                    startIcon={showLoader && <Loader width={35} color='var(--white)' bgColor={'transparent'}/>}>
+                    startIcon={showEndMatchLoader && <Loader width={35} color='var(--white)' bgColor={'transparent'}/>}>
                         End Match
                 </Button>
             </form>
@@ -126,9 +128,14 @@ const Wrapper = styled.div`
             text-align: center;
         }
     }
-    .submit-btn {
+    .end-match-btn, 
+    .edit-match-btn {
         font-weight: 600;
         width: 200px;
+        margin: 5px 0;
+    }
+    .end-match-btn {
+        background-color: var(--yellow);
     }
 `;
 

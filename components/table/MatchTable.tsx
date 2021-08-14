@@ -33,6 +33,7 @@ export interface MatchTableProps {
     onEditScore?: Function;
     onEndMatch?: Function;
     changePage?: any;
+    showEndMatchLoader?: Boolean;
 }
 
 const MatchTable: React.FC<MatchTableProps> = ({
@@ -45,7 +46,8 @@ const MatchTable: React.FC<MatchTableProps> = ({
     categories=[],
     teams=[],
     onLoad=false,
-    showEditScoreLoader=false
+    showEditScoreLoader=false,
+    showEndMatchLoader=false
 }) => {
     const columns:string[] = ["ID", "Team A", "Team B", "Category", "Date", "Time", "State", "Actions"];
     const [deleteModalVisible, setVisibleDeleteModal] = useState<Boolean>(false);
@@ -115,6 +117,28 @@ const MatchTable: React.FC<MatchTableProps> = ({
         setMatchList(matches.map((match) => formatDate(match))) 
     }, [matches]);
 
+    const scoreIcon = (
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            viewBox="0 0 319.98 319.98" fill="var(--green)" width="30px" height="30px" xmlSpace="preserve">
+            <g>
+                <path d="M288.624,67.456h-14.426V44.378c0-3.59-2.91-6.5-6.5-6.5s-6.5,2.91-6.5,6.5v23.078H58.782V44.378c0-3.59-2.91-6.5-6.5-6.5
+                    s-6.5,2.91-6.5,6.5v23.078H31.357C14.067,67.456,0,81.523,0,98.813v151.933c0,17.29,14.067,31.357,31.357,31.357h257.267
+                    c17.29,0,31.356-14.067,31.356-31.357V98.813C319.98,81.523,305.914,67.456,288.624,67.456z M306.98,98.813v25.578H166.494V80.456
+                    h122.13C298.745,80.456,306.98,88.691,306.98,98.813z M31.357,80.456h122.137v43.935H13V98.813
+                    C13,88.691,21.235,80.456,31.357,80.456z M13,250.745V137.39h140.494v131.712H31.357C21.235,269.102,13,260.867,13,250.745z
+                    M288.624,269.102h-122.13V137.39H306.98v113.355C306.98,260.867,298.745,269.102,288.624,269.102z"/>
+                <path d="M84.039,156.4h-1.58c-15.551,0-28.203,12.652-28.203,28.203v37.05c0,15.551,12.652,28.203,28.203,28.203h1.58
+                    c15.551,0,28.203-12.652,28.203-28.203v-37.05C112.242,169.052,99.59,156.4,84.039,156.4z M99.242,221.653
+                    c0,8.383-6.82,15.203-15.203,15.203h-1.58c-8.383,0-15.203-6.82-15.203-15.203v-37.05c0-8.383,6.82-15.203,15.203-15.203h1.58
+                    c8.383,0,15.203,6.82,15.203,15.203V221.653z"/>
+                <path d="M237.598,156.4h-1.58c-15.551,0-28.203,12.652-28.203,28.203v37.05c0,15.551,12.652,28.203,28.203,28.203h1.58
+                    c15.551,0,28.203-12.652,28.203-28.203v-37.05C265.801,169.052,253.149,156.4,237.598,156.4z M252.801,221.653
+                    c0,8.383-6.82,15.203-15.203,15.203h-1.58c-8.383,0-15.203-6.82-15.203-15.203v-37.05c0-8.383,6.82-15.203,15.203-15.203h1.58
+                    c8.383,0,15.203,6.82,15.203,15.203V221.653z"/>
+            </g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g>
+        </svg>
+    );
+
     return (
         <Wrapper className={[className, "matches-table"].join(' ')}>
             <ConfirmDialog 
@@ -126,8 +150,8 @@ const MatchTable: React.FC<MatchTableProps> = ({
                 <MatchForm categories={categories} teams={teams} postAction={onEditMatch} match={selectedMatch} />
             </Modal>
             
-            <Modal title="End match" onClose={onCloseEndMatchModal} show={endMatchModalVisible}>
-                <EndMatchForm onEndMatch={_onEndMatch} showLoader={showEditScoreLoader} onEditScore={_onEditScore} match={selectedMatch} />
+            <Modal title="Edit Score" onClose={onCloseEndMatchModal} show={endMatchModalVisible}>
+                <EndMatchForm onEndMatch={_onEndMatch} showEndMatchLoader={showEndMatchLoader} showLoader={showEditScoreLoader} onEditScore={_onEditScore} match={selectedMatch} />
             </Modal>
             <Paper>
                 <TableContainer className="table-container">  
@@ -154,15 +178,15 @@ const MatchTable: React.FC<MatchTableProps> = ({
                                             <StateText state={match.state || 0} />    
                                         </TableCell>
                                         <TableCell className="table-actions">
-                                            <IconButton onClick={() => { openEndMatchModal(matches[index]) }} aria-label="edit">
+                                            <IconButton onClick={() => { openEditModal(match) }} aria-label="edit">
                                                 <EditIcon/>
                                             </IconButton>
                                             <IconButton onClick={() => { openDeleteModal(match) }} aria-label="delete">
                                                 <DeleteIcon color="error" />
                                             </IconButton>
-                                            {/* <Button className="end-match-btn" onClick={() => { openEndMatchModal(matches[index]) }} aria-label="end">
-                                                EDIT SCORE
-                                            </Button> */}
+                                            <Button className="end-match-btn" onClick={() => { openEndMatchModal(matches[index]) }} aria-label="end">
+                                                {scoreIcon}
+                                            </Button>
                                             {/* <IconButton onClick={() => { openEditModal(match) }} aria-label="edit">
                                                 <EditIcon/> Score
                                             </IconButton> */}
@@ -195,12 +219,10 @@ const Wrapper = styled.div`
         display: flex;
         flex-direction: row;
         justify-content: center;
+        min-height: 95px;
     }
     .table-container {
         position: relative;
-    }
-    .end-match-btn {
-        color: green;
     }
 `;
 

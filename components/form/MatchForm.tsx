@@ -31,6 +31,9 @@ const MatchForm: React.FC<MatchFormProps> = ({
     const [teamAError, setTeamAError] = useState<string>();
     const [teamBError, setTeamBError] = useState<string>();
     const [loaderVisible, showLoader] = useState<Boolean>(false);
+    const [oddsA, setOddsA] = useState(1);
+    const [oddsB, setOddsB] = useState(1);
+    const [oddsNul, setOddsNul] = useState(1);
 
     const sameTeamErrorMessage = "{team} has already been selected"
 
@@ -83,6 +86,9 @@ const MatchForm: React.FC<MatchFormProps> = ({
             categoryId: category.id,
             teamAId: teamA.id,
             teamBId: teamB.id,
+            oddsA: oddsA,
+            oddsB: oddsB,
+            oddsNul: oddsNul,
             matchDate: d
         };
         if(postAction) {
@@ -90,6 +96,16 @@ const MatchForm: React.FC<MatchFormProps> = ({
             await postAction(match_);
             showLoader(false);
         }
+    }
+
+    const handleOddsChange = (e: React.ChangeEvent) => {
+        const elt = e.target as HTMLInputElement;
+        if(elt.id == "odds-a") 
+            setOddsA(parseInt(elt.value));
+        else if(elt.id == "odds-b") 
+            setOddsB(parseInt(elt.value));
+        else if(elt.id == "odds-null")
+            setOddsNul(parseInt(elt.value));
     }
     
     return (
@@ -113,41 +129,64 @@ const MatchForm: React.FC<MatchFormProps> = ({
                     </Select>
                     
                 </FormControl>
-                <FormControl variant="outlined" className='match-teamA' error={!!teamAError}>
-                    <InputLabel htmlFor="teamA">Team A</InputLabel>
-                    <Select
-                        native
-                        value={teamA?.id}
-                        onChange={handleTeamChange}
-                        label="Team A"
-                        inputProps={{
-                            name: 'team A',
-                            id: 'teamA',
-                        }}
-                    >
-                        {teams.map((team: Team) => {
-                            return <option key={team.id} value={team.id}>{ team.name }</option>
-                        })}
-                    </Select>
-                    {teamAError && <FormHelperText>{ teamAError }</FormHelperText>}
-                </FormControl>
-                <FormControl variant="outlined" className='match-teamB' error={!!teamBError}>
-                    <InputLabel htmlFor="teamB">Team B</InputLabel>
-                    <Select
-                        native
-                        value={teamB?.id}
-                        onChange={handleTeamChange}
-                        label="Team B"
-                        inputProps={{
-                            name: 'team B',
-                            id: 'teamB',
-                        }}
-                    >
-                        {teams.map((team: Team) => {
-                            return <option key={team.id} value={team.id}>{ team.name }</option>
-                        })}
-                    </Select>
-                    {teamBError && <FormHelperText>{ teamBError }</FormHelperText>}
+                <div className="grouped-input">
+                    <FormControl variant="outlined" className='match-teamA' error={!!teamAError}>
+                        <InputLabel htmlFor="teamA">Team A</InputLabel>
+                        <Select
+                            native
+                            value={teamA?.id}
+                            onChange={handleTeamChange}
+                            label="Team A"
+                            inputProps={{
+                                name: 'team A',
+                                id: 'teamA',
+                            }}
+                        >
+                            {teams.map((team: Team) => {
+                                return <option key={team.id} value={team.id}>{ team.name }</option>
+                            })}
+                        </Select>
+                        {teamAError && <FormHelperText>{ teamAError }</FormHelperText>}
+                    </FormControl>
+                    <TextField value={oddsA} 
+                        className="odds-field" 
+                        onChange={handleOddsChange} 
+                        id='odds-a' 
+                        type="number"
+                        label='Odds A' variant='outlined' />
+                </div>
+                <div className="grouped-input">
+                    <FormControl variant="outlined" className='match-teamB' error={!!teamBError}>
+                        <InputLabel htmlFor="teamB">Team B</InputLabel>
+                        <Select
+                            native
+                            value={teamB?.id}
+                            onChange={handleTeamChange}
+                            label="Team B"
+                            inputProps={{
+                                name: 'team B',
+                                id: 'teamB',
+                            }}
+                        >
+                            {teams.map((team: Team) => {
+                                return <option key={team.id} value={team.id}>{ team.name }</option>
+                            })}
+                        </Select>
+                        {teamBError && <FormHelperText>{ teamBError }</FormHelperText>}
+                    </FormControl>
+                    <TextField value={oddsB} 
+                        className="odds-field" 
+                        onChange={handleOddsChange} 
+                        id='odds-b' 
+                        type="number"
+                        label='Odds B' variant='outlined' />
+                </div>
+                <FormControl variant="outlined" className="match-teamB">
+                    <TextField value={oddsNul} 
+                            onChange={handleOddsChange} 
+                            id='odds-null' 
+                            type="number"
+                            label='Odds Null' variant='outlined' />
                 </FormControl>
                 <FormControl variant="outlined" className="match-date">
                     <TextField
@@ -221,6 +260,15 @@ const Wrapper = styled.div`
     .match-teamB,
     .match-date {
         margin-bottom: 10px;
+    }
+    .grouped-input {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .odds-field {
+        margin-left: 5px; 
     }
 `;
 
